@@ -13,7 +13,7 @@ hosts[^1] while maintaining the structure of the original post.
 go get github.com/jdkato/pb
 ```
 
-(Or download one of [pre-built binaries][1].)
+(Or download one of the [pre-built binaries][1].)
 
 ## Configuration
 
