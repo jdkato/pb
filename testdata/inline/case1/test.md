@@ -1,0 +1,5 @@
+# Intro
+
+This is a CS thing $2^32$ that should be nice.
+
+The math is $\zeta(s) = \sum 1/n^{s}$ good too.
