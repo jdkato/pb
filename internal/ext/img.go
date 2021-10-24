@@ -9,13 +9,55 @@ import (
 	"net/url"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strconv"
 	"strings"
 
+	"github.com/jdkato/pb/internal/cli"
 	"github.com/jdkato/pb/internal/config"
 	msdk "github.com/medium/medium-sdk-go"
+	"github.com/pterm/pterm"
 	"github.com/yuin/goldmark/util"
 )
+
+// FromLocalToMedium uploads a local file to Medium.
+func FromLocalToMedium(src string) string {
+	var contentType string
+
+	if strings.Contains(src, "http") {
+		return src
+	}
+
+	src = filepath.Join(cli.Flags.ImageDir, src)
+	switch strings.ToLower(filepath.Ext(src)) {
+	case ".png":
+		contentType = "image/png"
+	case ".jpg", ".jpeg":
+		contentType = "image/jpeg"
+	case ".gif":
+		contentType = "image/gif"
+	case ".tiff":
+		contentType = "image/tiff"
+	default:
+		panic(fmt.Sprintf("unsupported image type '%s'", src))
+	}
+
+	m := msdk.NewClientWithAccessToken(config.Auth.Medium)
+
+	ret, err := m.UploadImage(msdk.UploadOptions{
+		FilePath:    src,
+		ContentType: contentType,
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	pterm.Success.Printf(
+		"Uploaded image '%s' (%s)\n", filepath.Base(src), contentType)
+
+	return ret.URL
+}
 
 func figure(format string, args ...string) string {
 	r := strings.NewReplacer(args...)

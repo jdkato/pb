@@ -11,12 +11,14 @@ import (
 	grh "github.com/yuin/goldmark/renderer/html"
 
 	"github.com/jdkato/pb/internal/ext"
+	images "github.com/mdigger/goldmark-images"
 	highlighting "github.com/yuin/goldmark-highlighting"
 )
 
 // mediumMd is an extension designed to accomdate markup limitations of
 // https://medium.com/.
 var mediumMd = goldmark.New(
+	images.NewReplacer(ext.FromLocalToMedium),
 	goldmark.WithExtensions(
 		// Assigns `name=` IDs to each paragraph so that we have something for
 		// backlinks to reference.
