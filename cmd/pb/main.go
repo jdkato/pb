@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"strings"
 
 	"github.com/jdkato/pb/internal/cli"
@@ -54,6 +55,11 @@ func main() {
 				fmt.Sprintf("Command '%s' failed", args[0]), err.Error())
 		}
 		os.Exit(0)
+	}
+
+	_, err := exec.LookPath("inkscape")
+	if err != nil {
+		cli.ShowError("Please add 'inkscape' to your $PATH.", err.Error())
 	}
 
 	converter, err := platform.NewConverter(args[0])
