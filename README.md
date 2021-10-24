@@ -44,7 +44,7 @@ Uploading content to Medium requires an [Integration token][2]. To generate one,
     </tr>
 </table>
 
-Then, enter the `pb configure` command, follow the instructions, and enter your token.
+Then, enter the `pb configure` command, follow the instructions, and enter your token. For math formulas on Medium, you also need to have [Inkscape][5] installed and available on your `$PATH`.
 
 ## Usage
 
@@ -93,5 +93,6 @@ Commands:
 [2]: https://help.medium.com/hc/en-us/articles/213480228-Get-an-integration-token-for-your-writing-app
 [3]: https://medium.com/me/settings
 [4]: https://golang.org/
+[5]: https://inkscape.org/
 
 [^1]: Currently, only [Medium](https://medium.com/) is supported. Other hosts, like DEV and Hashnode, will be added in a future release. 
