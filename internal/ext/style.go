@@ -11,5 +11,7 @@ var boldKeywords = styles.Register(chroma.MustNewStyle("bold-keywords", chroma.S
 	chroma.KeywordNamespace:   "bold",
 	chroma.KeywordReserved:    "bold",
 	chroma.Keyword:            "bold",
+	chroma.Operator:           "bold",
 	chroma.OperatorWord:       "bold",
+	chroma.NameBuiltin:        "bold",
 }))
