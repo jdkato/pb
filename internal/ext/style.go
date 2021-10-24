@@ -6,9 +6,9 @@ import (
 )
 
 var boldKeywords = styles.Register(chroma.MustNewStyle("bold-keywords", chroma.StyleEntries{
-	chroma.Keyword:          "bold",
-	chroma.KeywordConstant:  "bold",
-	chroma.KeywordNamespace: "bold",
-	chroma.KeywordType:      "bold",
-	chroma.OperatorWord:     "bold",
+	chroma.KeywordDeclaration: "bold",
+	chroma.KeywordConstant:    "bold",
+	chroma.KeywordNamespace:   "bold",
+	chroma.KeywordType:        "bold",
+	chroma.OperatorWord:       "bold",
 }))
