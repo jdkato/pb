@@ -37,7 +37,7 @@ func (r *mathHTMLRenderer) render(w util.BufWriter, source []byte, node ast.Node
 	if entering {
 		n := node.(*mathNode)
 		if n.IsInline {
-			w.WriteString(formula(string(n.Value)))
+			w.WriteString("<em>" + formula(string(n.Value)) + "</em>")
 		} else {
 			err = toImg(w, n, r.usePNG)
 		}
