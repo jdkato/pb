@@ -11,14 +11,13 @@ import (
 	grh "github.com/yuin/goldmark/renderer/html"
 
 	"github.com/jdkato/pb/internal/ext"
-	images "github.com/mdigger/goldmark-images"
 	highlighting "github.com/yuin/goldmark-highlighting"
 )
 
 // mediumMd is an extension designed to accomdate markup limitations of
 // https://medium.com/.
 var mediumMd = goldmark.New(
-	images.NewReplacer(ext.FromLocalToMedium),
+	//images.NewReplacer(ext.FromLocalToMedium),
 	goldmark.WithExtensions(
 		// Assigns `name=` IDs to each paragraph so that we have something for
 		// backlinks to reference.
@@ -52,7 +51,7 @@ var mediumMd = goldmark.New(
 )
 
 var style2Tag = regexp.MustCompile(`<span style="font-weight:bold">(.+)</span>`)
-var p2Name = regexp.MustCompile(`<p id="(p-\d)"`)
+var p2Name = regexp.MustCompile(`<p id="(\d{4})"`)
 
 func toMediumMarkdown(b []byte) (post, error) {
 	var buf bytes.Buffer
@@ -72,6 +71,7 @@ func toMediumMarkdown(b []byte) (post, error) {
 
 	html := style2Tag.ReplaceAllString(buf.String(), "<strong>${1}</strong>")
 	html = p2Name.ReplaceAllString(html, `<p name="${1}"`)
+	//html = fmt.Sprintf("<h1>%s</h1>\n", p.meta.Title) + html
 
 	p.body = html
 	return p, nil

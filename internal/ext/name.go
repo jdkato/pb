@@ -17,11 +17,11 @@ var index = 0
 
 func (g *namedPTransformer) Transform(node *gast.Document, reader text.Reader, pc parser.Context) {
 	_ = gast.Walk(node, func(n gast.Node, entering bool) (gast.WalkStatus, error) {
-		if p, ok := n.(*gast.Paragraph); ok {
+		if n.Kind() == gast.KindParagraph || n.Kind() == gast.KindListItem {
 			if entering {
 				index++
-				name := fmt.Sprintf("p-%d", index)
-				p.SetAttributeString("id", []byte(name))
+				name := fmt.Sprintf("%04d", index)
+				n.SetAttributeString("id", []byte(name))
 			}
 		}
 		return gast.WalkContinue, nil

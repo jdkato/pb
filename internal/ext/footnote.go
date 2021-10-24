@@ -38,6 +38,15 @@ func (r *footnoteHTMLRenderer) RegisterFuncs(reg renderer.NodeRendererFuncRegist
 	reg.Register(east.KindFootnoteList, r.renderFootnoteList)
 }
 
+func findClosestP(n gast.Node) []byte {
+	p := n.Parent()
+	for p.Kind() != gast.KindParagraph {
+		p = p.Parent()
+	}
+	name, _ := n.Parent().AttributeString("id")
+	return name.([]byte)
+}
+
 func (r *footnoteHTMLRenderer) renderFootnoteLink(w util.BufWriter, source []byte, node gast.Node, entering bool) (gast.WalkStatus, error) {
 	if entering {
 		n := node.(*east.FootnoteLink)
@@ -46,14 +55,14 @@ func (r *footnoteHTMLRenderer) renderFootnoteLink(w util.BufWriter, source []byt
 		if name != nil {
 			idx2ref[n.Index] = string(name.([]byte))
 		}
-		_, _ = w.WriteString(`<sup id="`)
-		_, _ = w.Write(r.idPrefix(node))
-		_, _ = w.WriteString(`fnref:`)
-		_, _ = w.WriteString(is)
-		_, _ = w.WriteString(`"><a href="#`)
+		_, _ = w.WriteString(`"<a href="#`)
 		_, _ = w.Write(r.idPrefix(node))
 		_, _ = w.WriteString(`fn:`)
 		_, _ = w.WriteString(is)
+		//_, _ = w.WriteString(`" data-name="`)
+		//_, _ = w.Write(r.idPrefix(node))
+		//_, _ = w.WriteString(`df:`)
+		//_, _ = w.WriteString(is)
 		_, _ = w.WriteString(`" class="`)
 		_, _ = w.Write(applyFootnoteTemplate(r.FootnoteConfig.LinkClass,
 			n.Index, n.RefCount))
@@ -64,7 +73,7 @@ func (r *footnoteHTMLRenderer) renderFootnoteLink(w util.BufWriter, source []byt
 		_, _ = w.WriteString(`" role="doc-noteref">`)
 
 		_, _ = w.WriteString(formula("^" + is))
-		_, _ = w.WriteString(`</a></sup>`)
+		_, _ = w.WriteString(`</a>`)
 	}
 	return gast.WalkContinue, nil
 }
@@ -74,11 +83,11 @@ func (r *footnoteHTMLRenderer) renderFootnoteBacklink(w util.BufWriter, source [
 		n := node.(*east.FootnoteBacklink)
 		is := strconv.Itoa(n.Index)
 		_, _ = w.WriteString(`&#160;<a href="#`)
-		_, _ = w.Write(r.idPrefix(node))
 		if name, ok := idx2ref[n.Index]; ok {
 			_, _ = w.WriteString(name)
 		} else {
-			_, _ = w.WriteString(`fnref:`)
+			_, _ = w.Write(r.idPrefix(node))
+			_, _ = w.WriteString(`df:`)
 			_, _ = w.WriteString(is)
 		}
 		_, _ = w.WriteString(`" class="`)

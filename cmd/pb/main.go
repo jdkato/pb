@@ -27,7 +27,7 @@ func doConvert(c platform.Converter) error {
 			return err
 		}
 	}
-	done := fmt.Sprintf("Uploaded post to %s", cli.ToSentence(sites, "and"))
+	done := fmt.Sprintf("Uploaded draft to %s", cli.ToSentence(sites, "and"))
 
 	spinner.Success(done)
 	return nil

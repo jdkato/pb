@@ -22,7 +22,7 @@ func (c Converter) toMedium() error {
 		Title:         post.meta.Title,
 		Content:       post.body,
 		Tags:          post.meta.Tags,
-		ContentFormat: msdk.ContentFormatHTML,
+		ContentFormat: msdk.ContentFormatMarkdown,
 		PublishStatus: msdk.PublishStatusDraft,
 	})
 
