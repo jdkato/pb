@@ -179,6 +179,11 @@ func init() {
 
 // formula processes a formula in s, writing the result to w.
 func formula(s string) string {
+	// FIXME: Why?
+	//
+	// See $x^n + y^n = z^n$, for example.
+	s = " " + strings.Trim(s, "$") + " "
+
 	// Replace symbols.
 	s = replacer.Replace(s)
 
@@ -188,5 +193,5 @@ func formula(s string) string {
 	// Replace subscripts.
 	s = subregexp.ReplaceAllStringFunc(s, subsupreplacer(sub))
 
-	return s
+	return strings.TrimSpace(s)
 }
