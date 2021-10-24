@@ -55,7 +55,7 @@ func (r *footnoteHTMLRenderer) renderFootnoteLink(w util.BufWriter, source []byt
 		if name != nil {
 			idx2ref[n.Index] = string(name.([]byte))
 		}
-		_, _ = w.WriteString(`"<a href="#`)
+		_, _ = w.WriteString(`<a href="#`)
 		_, _ = w.Write(r.idPrefix(node))
 		_, _ = w.WriteString(`fn:`)
 		_, _ = w.WriteString(is)
