@@ -17,7 +17,7 @@ var index = 0
 
 func (g *namedPTransformer) Transform(node *gast.Document, reader text.Reader, pc parser.Context) {
 	_ = gast.Walk(node, func(n gast.Node, entering bool) (gast.WalkStatus, error) {
-		if n.Kind() == gast.KindParagraph || n.Kind() == gast.KindListItem {
+		if n.Kind() == gast.KindParagraph {
 			if entering {
 				index++
 				name := fmt.Sprintf("%04d", index)

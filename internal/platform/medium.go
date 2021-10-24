@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"regexp"
 
+	images "github.com/mdigger/goldmark-images"
 	"github.com/mitchellh/mapstructure"
 	"github.com/yuin/goldmark"
 	meta "github.com/yuin/goldmark-meta"
@@ -17,7 +18,7 @@ import (
 // mediumMd is an extension designed to accomdate markup limitations of
 // https://medium.com/.
 var mediumMd = goldmark.New(
-	//images.NewReplacer(ext.FromLocalToMedium),
+	images.NewReplacer(ext.FromLocalToMedium),
 	goldmark.WithExtensions(
 		// Assigns `name=` IDs to each paragraph so that we have something for
 		// backlinks to reference.
