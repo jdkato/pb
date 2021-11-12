@@ -58,8 +58,10 @@ func main() {
 	}
 
 	_, err := exec.LookPath("inkscape")
-	if err != nil {
-		cli.ShowError("Please add 'inkscape' to your $PATH.", err.Error())
+	if err != nil && cli.Flags.Inkscape != "" {
+		cli.ShowError(
+			"Please add 'inkscape' to your $PATH or specify its location with `--inkscape`.",
+			err.Error())
 	}
 
 	converter, err := platform.NewConverter(args[0])

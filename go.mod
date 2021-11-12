@@ -17,6 +17,7 @@ require (
 )
 
 require (
+	github.com/abhinav/goldmark-toc v0.2.0 // indirect
 	github.com/alecthomas/chroma v0.9.4 // indirect
 	github.com/atomicgo/cursor v0.0.1 // indirect
 	github.com/dlclark/regexp2 v1.4.0 // indirect

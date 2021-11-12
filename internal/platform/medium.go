@@ -11,6 +11,7 @@ import (
 	"github.com/yuin/goldmark/parser"
 	grh "github.com/yuin/goldmark/renderer/html"
 
+	toc "github.com/abhinav/goldmark-toc"
 	"github.com/jdkato/pb/internal/ext"
 	highlighting "github.com/yuin/goldmark-highlighting"
 )
@@ -20,6 +21,11 @@ import (
 var mediumMd = goldmark.New(
 	images.NewReplacer(ext.FromLocalToMedium),
 	goldmark.WithExtensions(
+		// Adds a Table of Contents to the top of our post.
+		//
+		// TODO: allow for configuration ...
+		&toc.Extender{},
+
 		// Assigns `name=` IDs to each paragraph so that we have something for
 		// backlinks to reference.
 		ext.NamedP,

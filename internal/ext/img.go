@@ -82,8 +82,13 @@ func toPNG(w util.BufWriter, url string) error {
 		return err
 	}
 
+	exe := "inkscape"
+	if cli.Flags.Inkscape != "" {
+		exe = cli.Flags.Inkscape
+	}
+
 	cmd := exec.Command(
-		"inkscape",
+		exe,
 		"-h",
 		"64",
 		file1.Name(),
