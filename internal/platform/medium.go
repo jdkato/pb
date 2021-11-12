@@ -2,6 +2,7 @@ package platform
 
 import (
 	"bytes"
+	"fmt"
 	"regexp"
 
 	images "github.com/mdigger/goldmark-images"
@@ -12,6 +13,7 @@ import (
 	grh "github.com/yuin/goldmark/renderer/html"
 
 	toc "github.com/abhinav/goldmark-toc"
+	"github.com/jdkato/pb/internal/cli"
 	"github.com/jdkato/pb/internal/ext"
 	highlighting "github.com/yuin/goldmark-highlighting"
 )
@@ -20,6 +22,7 @@ import (
 // https://medium.com/.
 var mediumMd = goldmark.New(
 	images.NewReplacer(ext.FromLocalToMedium),
+	goldmark.WithParserOptions(parser.WithAutoHeadingID()),
 	goldmark.WithExtensions(
 		// Adds a Table of Contents to the top of our post.
 		//
@@ -58,7 +61,7 @@ var mediumMd = goldmark.New(
 )
 
 var style2Tag = regexp.MustCompile(`<span style="font-weight:bold">(.+)</span>`)
-var p2Name = regexp.MustCompile(`<p id="(\d{4})"`)
+var p2Name = regexp.MustCompile(`<(p|h\d) id="(\d{4})"`)
 
 func toMediumMarkdown(b []byte) (post, error) {
 	var buf bytes.Buffer
@@ -77,8 +80,10 @@ func toMediumMarkdown(b []byte) (post, error) {
 	}
 
 	html := style2Tag.ReplaceAllString(buf.String(), "<strong>${1}</strong>")
-	html = p2Name.ReplaceAllString(html, `<p name="${1}"`)
-	//html = fmt.Sprintf("<h1>%s</h1>\n", p.meta.Title) + html
+	html = p2Name.ReplaceAllString(html, `<${1} name="${2}"`)
+	if cli.Flags.AddTitle {
+		html = fmt.Sprintf("<h1>%s</h1>\n", p.meta.Title) + html
+	}
 
 	p.body = html
 	return p, nil
