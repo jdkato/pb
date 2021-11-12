@@ -13,7 +13,6 @@ type CLIFlags struct {
 	Version  bool
 	ImageDir string
 	Inkscape string
-	TOC      bool
 	AddTitle bool
 }
 
@@ -35,6 +34,5 @@ func init() {
 	pflag.StringVarP(&Flags.Inkscape, "inkscape", "i", "", "Location of the inkscape binary.")
 	pflag.BoolVarP(&Flags.Help, "help", "h", false, "Print this help message.")
 	pflag.BoolVarP(&Flags.Version, "version", "v", false, "Print the current version.")
-	pflag.BoolVarP(&Flags.TOC, "toc", "c", false, "Add a table of contents.")
 	pflag.BoolVarP(&Flags.AddTitle, "add-title", "a", false, "Append an `h1` tag using the given `title` key.")
 }
